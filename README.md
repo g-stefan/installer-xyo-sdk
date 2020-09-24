@@ -1,2 +1,2 @@
 # installer-xyo-sdk
-Installer for XYO-SDK
+XYO SDK Installer
