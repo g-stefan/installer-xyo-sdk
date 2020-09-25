@@ -138,9 +138,9 @@ Section "XYO SDK (required)" MainSection
 
 	; SDK directory
 	ReadEnvStr $PathUserProfile USERPROFILE
-	CreateDirectory "$PathUserProfile\Documents\SDK\bin"
-	CreateDirectory "$PathUserProfile\Documents\SDK\include"
-	CreateDirectory "$PathUserProfile\Documents\SDK\lib"
+	CreateDirectory "$PathUserProfile\SDK\bin"
+	CreateDirectory "$PathUserProfile\SDK\include"
+	CreateDirectory "$PathUserProfile\SDK\lib"
 
 ; Uninstaller
 !ifndef INNER
@@ -199,42 +199,42 @@ Section "XYO SDK (required)" MainSection
 	EnVar::SetHKCU
 	
 	ReadEnvStr $PathUserProfile USERPROFILE
-	CreateDirectory "$PathUserProfile\Documents\SDK"
+	CreateDirectory "$PathUserProfile\SDK"
 
 	; Set PATH
-	EnVar::Check "PATH" "$PathUserProfile\Documents\SDK\bin"
+	EnVar::Check "PATH" "$PathUserProfile\SDK\bin"
 	Pop $0
 	${If} $0 <> 0
-		EnVar::AddValue "PATH" "$PathUserProfile\Documents\SDK\bin"
+		EnVar::AddValue "PATH" "$PathUserProfile\SDK\bin"
 		Pop $0
 	${EndIf}
 
 	; Set INCLUDE
-	EnVar::Check "INCLUDE" "$PathUserProfile\Documents\SDK\include"
+	EnVar::Check "INCLUDE" "$PathUserProfile\SDK\include"
 	Pop $0
 	${If} $0 <> 0
-		EnVar::AddValue "INCLUDE" "$PathUserProfile\Documents\SDK\include"
+		EnVar::AddValue "INCLUDE" "$PathUserProfile\SDK\include"
 		Pop $0
 	${EndIf}
 
 	; Set LIB
-	EnVar::Check "LIB" "$PathUserProfile\Documents\SDK\lib"
+	EnVar::Check "LIB" "$PathUserProfile\SDK\lib"
 	Pop $0
 	${If} $0 <> 0
-		EnVar::AddValue "LIB" "$PathUserProfile\Documents\SDK\lib"
+		EnVar::AddValue "LIB" "$PathUserProfile\SDK\lib"
 		Pop $0
 	${EndIf}
 
 	; Set XYO_PATH_REPOSITORY
 	EnVar::Delete "XYO_PATH_REPOSITORY"
 	Pop $0
-	EnVar::AddValue "XYO_PATH_REPOSITORY" "$PathUserProfile\Documents\SDK"
+	EnVar::AddValue "XYO_PATH_REPOSITORY" "$PathUserProfile\SDK"
 	Pop $0
 
 	; Set XYO_PATH_RELEASE
 	EnVar::Delete "XYO_PATH_RELEASE"
 	Pop $0
-	EnVar::AddValue "XYO_PATH_RELEASE" "$PathUserProfile\Documents\SDK\release"
+	EnVar::AddValue "XYO_PATH_RELEASE" "$PathUserProfile\SDK\release"
 	Pop $0
 
 SectionEnd
@@ -381,21 +381,21 @@ Section "Uninstall"
 	EnVar::SetHKCU
 
 	ReadEnvStr $PathUserProfile USERPROFILE
-	CreateDirectory "$PathUserProfile\Documents\SDK"
+	CreateDirectory "$PathUserProfile\SDK"
 
 	; Remove PATH
-	EnVar::Check "PATH" "$PathUserProfile\Documents\SDK\bin"
+	EnVar::Check "PATH" "$PathUserProfile\SDK\bin"
 	Pop $0
 	${If} $0 = 0
-		EnVar::DeleteValue "PATH" "$PathUserProfile\Documents\SDK\bin"
+		EnVar::DeleteValue "PATH" "$PathUserProfile\SDK\bin"
 		Pop $0
 	${EndIf}
 
 	; Remove INCLUDE
-	EnVar::Check "INCLUDE" "$PathUserProfile\Documents\SDK\include"
+	EnVar::Check "INCLUDE" "$PathUserProfile\SDK\include"
 	Pop $0
 	${If} $0 = 0
-		EnVar::DeleteValue "INCLUDE" "$PathUserProfile\Documents\SDK\include"
+		EnVar::DeleteValue "INCLUDE" "$PathUserProfile\SDK\include"
 		Pop $0
 		EnVar::Update HKCU INCLUDE
 		ReadEnvStr $0 INCLUDE
@@ -406,10 +406,10 @@ Section "Uninstall"
 	${EndIf}
 
 	; Remove LIB
-	EnVar::Check "LIB" "$PathUserProfile\Documents\SDK\lib"
+	EnVar::Check "LIB" "$PathUserProfile\SDK\lib"
 	Pop $0
 	${If} $0 = 0
-		EnVar::DeleteValue "LIB" "$PathUserProfile\Documents\SDK\lib"
+		EnVar::DeleteValue "LIB" "$PathUserProfile\SDK\lib"
 		Pop $0
 		EnVar::Update HKCU LIB
 		ReadEnvStr $0 LIB
