@@ -51,8 +51,8 @@ echo Error: %1-%2-win64-msvc-2019 not found!
 exit 1
 :downloadDefined
 
-set PROJECT=xyo-sdk-3.0.0.csv
+set PROJECT=xyo-sdk-3.1.0.csv
 echo %PROJECT%
-if not exist vendor\%PROJECT% curl --insecure --location https://github.com/g-stefan/xyo-sdk/releases/download/v3.0.0/%PROJECT% --output vendor\%PROJECT%
+if not exist vendor\%PROJECT% curl --insecure --location https://github.com/g-stefan/xyo-sdk/releases/download/v3.1.0/%PROJECT% --output vendor\%PROJECT%
 
 for /F "eol=# delims=, tokens=1,2" %%i in (vendor\%PROJECT%) do call :download %%i %%j

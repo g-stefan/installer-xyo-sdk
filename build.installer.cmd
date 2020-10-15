@@ -13,6 +13,6 @@ mkdir build
 
 makensis.exe /NOCD "util\xyo-sdk-installer.nsi"
 
-call grigore-stefan.sign "XYO SDK" "installer\xyo-sdk-3.0.0-installer.exe"
+call grigore-stefan.sign "XYO SDK" "installer\xyo-sdk-3.1.0-installer.exe"
 
 if exist build\ rmdir /Q /S build
