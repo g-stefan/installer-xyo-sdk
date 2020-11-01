@@ -3,8 +3,4 @@ rem Public domain
 rem http://unlicense.org/
 rem Created by Grigore Stefan <g_stefan@yahoo.com>
 
-set ACTION=%1
-if "%1" == "" set ACTION=release
-echo -^> %ACTION% xyo-sdk
-
-call build.%ACTION%.cmd
+set PRODUCT_VERSION=3.1.0

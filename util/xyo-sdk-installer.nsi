@@ -13,7 +13,7 @@
 Name "XYO SDK"
 
 ; Version
-!define XYOSDKVersion "3.1.0"
+!define XYOSDKVersion "$%PRODUCT_VERSION%"
 
 ; The file to write
 OutFile "installer\xyo-sdk-${XYOSDKVersion}-installer.exe"
