@@ -217,11 +217,27 @@ Section "XYO SDK (required)" MainSection
 		Pop $0
 	${EndIf}
 
+	; Set INCLUDE System
+	EnVar::Check "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
+	Pop $0
+	${If} $0 <> 0
+		EnVar::AddValue "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
+		Pop $0
+	${EndIf}
+
 	; Set LIB
 	EnVar::Check "LIB" "$PathUserProfile\SDK\lib"
 	Pop $0
 	${If} $0 <> 0
 		EnVar::AddValue "LIB" "$PathUserProfile\SDK\lib"
+		Pop $0
+	${EndIf}
+
+	; Set LIB System
+	EnVar::Check "LIB" "$INSTDIR${SoftwareSubDir}\lib"
+	Pop $0
+	${If} $0 <> 0
+		EnVar::AddValue "LIB" "$INSTDIR${SoftwareSubDir}\lib"
 		Pop $0
 	${EndIf}
 
@@ -391,6 +407,20 @@ Section "Uninstall"
 		Pop $0
 	${EndIf}
 
+	; Remove INCLUDE System
+	EnVar::Check "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
+	Pop $0
+	${If} $0 = 0
+		EnVar::DeleteValue "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
+		Pop $0
+		EnVar::Update HKCU INCLUDE
+		ReadEnvStr $0 INCLUDE
+		${If} $0 == ""
+			EnVar::Delete "INCLUDE"
+			Pop $0		
+		${EndIf}
+	${EndIf}
+
 	; Remove INCLUDE
 	EnVar::Check "INCLUDE" "$PathUserProfile\SDK\include"
 	Pop $0
@@ -401,6 +431,20 @@ Section "Uninstall"
 		ReadEnvStr $0 INCLUDE
 		${If} $0 == ""
 			EnVar::Delete "INCLUDE"
+			Pop $0		
+		${EndIf}
+	${EndIf}
+
+	; Remove LIB System
+	EnVar::Check "LIB" "$INSTDIR${SoftwareSubDir}\lib"
+	Pop $0
+	${If} $0 = 0
+		EnVar::DeleteValue "LIB" "$INSTDIR${SoftwareSubDir}\lib"
+		Pop $0
+		EnVar::Update HKCU LIB
+		ReadEnvStr $0 LIB
+		${If} $0 == ""
+			EnVar::Delete "LIB"
 			Pop $0		
 		${EndIf}
 	${EndIf}
