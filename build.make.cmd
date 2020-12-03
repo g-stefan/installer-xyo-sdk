@@ -30,6 +30,7 @@ goto extractReleaseDefined
 set RELEASE_PATH="release"
 if "%1" == "perl" set RELEASE_PATH="release\opt\perl"
 if "%1" == "httpd" set RELEASE_PATH="release\opt\httpd"
+if "%1" == "llvm" set RELEASE_PATH="release\opt\llvm"
 if not exist "%RELEASE_PATH%\" mkdir "%RELEASE_PATH%"
 call :cmdX 7z x -aoa -obuild vendor/%2.7z
 xcopy /Y /S /E "build\%2\*" %RELEASE_PATH%
@@ -43,6 +44,7 @@ goto extractReleaseBinDefined
 set RELEASE_PATH="release\bin"
 if "%1" == "perl" set RELEASE_PATH="release\opt\perl"
 if "%1" == "httpd" set RELEASE_PATH="release\opt\httpd"
+if "%1" == "llvm" set RELEASE_PATH="release\opt\llvm"
 if not exist "%RELEASE_PATH%\" mkdir "%RELEASE_PATH%"
 call :cmdX 7z x -aoa -obuild vendor/%2.7z
 xcopy /Y /S /E "build\%2\*" %RELEASE_PATH%
