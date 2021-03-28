@@ -3,16 +3,16 @@ rem Public domain
 rem http://unlicense.org/
 rem Created by Grigore Stefan <g_stefan@yahoo.com>
 
-call build.config.cmd
+call build\build.config.cmd
 
 echo -^> make %PRODUCT_NAME%
 
-if exist build\ rmdir /Q /S build
-if exist release\ rmdir /Q /S release
+if exist temp\ rmdir /Q /S temp
+if exist output\ rmdir /Q /S output
 
-mkdir build
-mkdir release
-mkdir release\bin
+mkdir temp
+mkdir output
+mkdir output\bin
 
 goto cmdXDefined
 :cmdX
@@ -27,30 +27,30 @@ exit 1
 goto extractReleaseDefined
 :extractRelease
 
-set RELEASE_PATH="release"
-if "%1" == "perl" set RELEASE_PATH="release\opt\perl"
-if "%1" == "httpd" set RELEASE_PATH="release\opt\httpd"
-if "%1" == "llvm" set RELEASE_PATH="release\opt\llvm"
+set RELEASE_PATH="output"
+if "%1" == "perl" set RELEASE_PATH="output\opt\perl"
+if "%1" == "httpd" set RELEASE_PATH="output\opt\httpd"
+if "%1" == "llvm" set RELEASE_PATH="output\opt\llvm"
 if "%1" == "llvm" goto:eof
 if not exist "%RELEASE_PATH%\" mkdir "%RELEASE_PATH%"
-call :cmdX 7z x -aoa -obuild vendor/%2.7z
-xcopy /Y /S /E "build\%2\*" %RELEASE_PATH%
-rmdir /Q /S build\%2
+call :cmdX 7z x -aoa -otemp vendor/%2.7z
+xcopy /Y /S /E "temp\%2\*" %RELEASE_PATH%
+rmdir /Q /S temp\%2
 
 goto:eof
 :extractReleaseDefined
 
 goto extractReleaseBinDefined
 :extractReleaseBin
-set RELEASE_PATH="release\bin"
-if "%1" == "perl" set RELEASE_PATH="release\opt\perl"
-if "%1" == "httpd" set RELEASE_PATH="release\opt\httpd"
-if "%1" == "llvm" set RELEASE_PATH="release\opt\llvm"
+set RELEASE_PATH="output\bin"
+if "%1" == "perl" set RELEASE_PATH="output\opt\perl"
+if "%1" == "httpd" set RELEASE_PATH="output\opt\httpd"
+if "%1" == "llvm" set RELEASE_PATH="output\opt\llvm"
 if "%1" == "llvm" goto:eof
 if not exist "%RELEASE_PATH%\" mkdir "%RELEASE_PATH%"
-call :cmdX 7z x -aoa -obuild vendor/%2.7z
-xcopy /Y /S /E "build\%2\*" %RELEASE_PATH%
-rmdir /Q /S build\%2
+call :cmdX 7z x -aoa -otemp vendor/%2.7z
+xcopy /Y /S /E "temp\%2\*" %RELEASE_PATH%
+rmdir /Q /S temp\%2
 
 goto:eof
 :extractReleaseBinDefined
@@ -79,7 +79,7 @@ if not exist vendor\%PROJECT% curl --insecure --location https://github.com/g-st
 
 for /F "eol=# delims=, tokens=1,2" %%i in (vendor\%PROJECT%) do call :prepareRelease %%i %%j
 
-rmdir /Q /S build
+rmdir /Q /S temp
 
-copy /Y /B source\license.txt release\license.txt
-copy /Y /B source\xyo.ico release\xyo.ico
+copy /Y /B source\xyo-sdk.license.txt output\license.txt
+copy /Y /B source\xyo.ico output\xyo.ico
