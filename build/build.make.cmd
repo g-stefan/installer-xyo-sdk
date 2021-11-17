@@ -64,11 +64,11 @@ echo %1-%2
 
 SET PROJECT=%1
 SET PROJECT_VENDOR=%PROJECT:vendor-=%
-if exist vendor\%1-%2-win64-msvc-2019-dev.7z call :extractRelease %1 %1-%2-win64-msvc-2019-dev && goto:eof
-if exist vendor\%1-%2-win64-msvc-2019.7z call :extractReleaseBin %1 %1-%2-win64-msvc-2019 && goto:eof
+if exist vendor\%1-%2-%PRODUCT_PLATFORM%-dev.7z call :extractRelease %1 %1-%2-%PRODUCT_PLATFORM%-dev && goto:eof
+if exist vendor\%1-%2-%PRODUCT_PLATFORM%.7z call :extractReleaseBin %1 %1-%2-%PRODUCT_PLATFORM% && goto:eof
 if "%PROJECT_VENDOR%"=="%1" goto:eof
-if exist vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019-dev.7z call :extractRelease %PROJECT_VENDOR% %PROJECT_VENDOR%-%2-win64-msvc-2019-dev && goto:eof
-if exist vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019.7z call :extractReleaseBin %PROJECT_VENDOR% %PROJECT_VENDOR%-%2-win64-msvc-2019 && goto:eof
+if exist vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%-dev.7z call :extractRelease %PROJECT_VENDOR% %PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%-dev && goto:eof
+if exist vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%.7z call :extractReleaseBin %PROJECT_VENDOR% %PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM% && goto:eof
 
 goto:eof
 :prepareReleaseDefined

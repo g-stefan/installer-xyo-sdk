@@ -25,33 +25,33 @@ echo %1-%2
 
 SET PROJECT=%1
 SET PROJECT_VENDOR=%PROJECT:vendor-=%
-if exist vendor\%1-%2-win64-msvc-2019-dev.7z goto:eof
-if exist vendor\%1-%2-win64-msvc-2019.7z goto:eof
-if exist vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019-dev.7z goto:eof
-if exist vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019.7z goto:eof
+if exist vendor\%1-%2-%PRODUCT_PLATFORM%-dev.7z goto:eof
+if exist vendor\%1-%2-%PRODUCT_PLATFORM%.7z goto:eof
+if exist vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%-dev.7z goto:eof
+if exist vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%.7z goto:eof
 
-curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%1-%2-win64-msvc-2019-dev.7z --output vendor\%1-%2-win64-msvc-2019-dev.7z
-call :getSize "vendor\%1-%2-win64-msvc-2019-dev.7z"
+curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%1-%2-%PRODUCT_PLATFORM%-dev.7z --output vendor\%1-%2-%PRODUCT_PLATFORM%-dev.7z
+call :getSize "vendor\%1-%2-%PRODUCT_PLATFORM%-dev.7z"
 if %FILE_SIZE% GTR 16 goto:eof
-del /F /Q vendor\%1-%2-win64-msvc-2019-dev.7z
-curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%1-%2-win64-msvc-2019.7z --output vendor\%1-%2-win64-msvc-2019.7z
-call :getSize "vendor\%1-%2-win64-msvc-2019.7z"
+del /F /Q vendor\%1-%2-%PRODUCT_PLATFORM%-dev.7z
+curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%1-%2-%PRODUCT_PLATFORM%.7z --output vendor\%1-%2-%PRODUCT_PLATFORM%.7z
+call :getSize "vendor\%1-%2-%PRODUCT_PLATFORM%.7z"
 if %FILE_SIZE% GTR 16 goto:eof
-del /F /Q vendor\%1-%2-win64-msvc-2019.7z
+del /F /Q vendor\%1-%2-%PRODUCT_PLATFORM%.7z
 
 if "%PROJECT_VENDOR%"=="%1" goto downloadError
 
-curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%PROJECT_VENDOR%-%2-win64-msvc-2019-dev.7z --output vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019-dev.7z
-call :getSize "vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019-dev.7z"
+curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%-dev.7z --output vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%-dev.7z
+call :getSize "vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%-dev.7z"
 if %FILE_SIZE% GTR 16 goto:eof
-del /F /Q vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019-dev.7z
-curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%PROJECT_VENDOR%-%2-win64-msvc-2019.7z --output vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019.7z
-call :getSize "vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019.7z"
+del /F /Q vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%-dev.7z
+curl --insecure --location https://github.com/g-stefan/%1/releases/download/v%2/%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%.7z --output vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%.7z
+call :getSize "vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%.7z"
 if %FILE_SIZE% GTR 16 goto:eof
-del /F /Q vendor\%PROJECT_VENDOR%-%2-win64-msvc-2019.7z
+del /F /Q vendor\%PROJECT_VENDOR%-%2-%PRODUCT_PLATFORM%.7z
 
 :downloadError
-echo Error: %1-%2-win64-msvc-2019 not found!
+echo Error: %1-%2-%PRODUCT_PLATFORM% not found!
 exit 1
 :downloadDefined
 

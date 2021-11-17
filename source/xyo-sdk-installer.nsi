@@ -192,7 +192,7 @@ Section "XYO SDK (required)" MainSection
 	; Set XYO_PLATFORM
 	EnVar::Delete "XYO_PLATFORM"
 	Pop $0
-	EnVar::AddValue "XYO_PLATFORM" "win64-msvc-2019"
+	EnVar::AddValue "XYO_PLATFORM" "win64-msvc-2022"
 	Pop $0
 
 	; Set to HKCU
