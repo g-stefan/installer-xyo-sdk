@@ -16,7 +16,7 @@ Name "XYO SDK"
 !define XYOSDKVersion "$%PRODUCT_VERSION%"
 
 ; The file to write
-OutFile "installer\xyo-sdk-${XYOSDKVersion}-installer.exe"
+OutFile "release\xyo-sdk-${XYOSDKVersion}-installer.exe"
 
 Unicode True
 RequestExecutionLevel admin
@@ -317,7 +317,7 @@ Section "Uninstall"
 		Abort
  
 	IfFileExists "$INSTDIR${SoftwareSubDir}\*.*" 0 +2
-	IfFileExists "$INSTDIR${SoftwareSubDir}\bin\xyo.dll" +3
+	IfFileExists "$INSTDIR${SoftwareSubDir}\bin\fabricare.exe" +3
 		MessageBox MB_OK|MB_ICONSTOP "Install path invalid!"
 		Abort
 
