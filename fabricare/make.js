@@ -34,22 +34,5 @@ if (!Shell.fileExists("temp/extract.done.flag")) {
 	Shell.filePutContents("temp/extract.done.flag", "done");
 };
 
-if (!Shell.fileExists("temp/installer.done.flag")) {
-
-	Shell.copyFile("source/xyo-sdk.license.txt", "output/license.txt");
-	Shell.copyFile("source/xyo.ico", "output/xyo.ico");
-
-	Shell.removeDirRecursively("release");
-	Shell.mkdirRecursivelyIfNotExists("release");
-
-	Shell.setenv("PRODUCT_NAME", "installer-xyo-sdk");
-	Shell.setenv("PRODUCT_VERSION", Project.version);
-	Shell.setenv("PRODUCT_BASE", "xyo-sdk");
-	Shell.setenv("PRODUCT_PLATFORM", Platform.name);
-
-	exitIf(Shell.system("makensis.exe /NOCD \"source\\xyo-sdk-installer.nsi\""));
-	exitIf(Shell.system("grigore-stefan.sign \"XYO SDK\" \"release\\" + projectSuper + "-" + Project.version + "-installer.exe\""));
-
-	Shell.filePutContents("temp/installer.done.flag", "done");
-};
-
+Shell.copyFile("source/xyo-sdk.license.txt", "output/license.txt");
+Shell.copyFile("source/xyo.ico", "output/xyo.ico");
