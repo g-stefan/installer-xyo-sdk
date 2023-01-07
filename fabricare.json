@@ -1,11 +1,16 @@
 {
-	"project": {
+	"solution": {
 		"name" : "installer-xyo-sdk",
 		"type" : "xyo-cpp",
-		"SPDX-License-Identifier": "MIT",
-		"version" : "5.0.0",
-		"hasRelease" : true,
-		"noVersion" : true,
-		"githubRelease" : true
+		"projects": [
+			{
+				"name" : "installer-xyo-sdk",
+				"type" : "xyo-cpp",
+				"SPDX-License-Identifier": "MIT",
+				"version" : "5.0.0",
+				"noVersion" : true
+			}
+		],
+		"hasGithub" : true
 	}
 }
