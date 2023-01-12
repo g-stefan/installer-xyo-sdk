@@ -1,6 +1,6 @@
 // Created by Grigore Stefan <g_stefan@yahoo.com>
 // Public domain (Unlicense) <http://unlicense.org>
-// SPDX-FileCopyrightText: 2022 Grigore Stefan <g_stefan@yahoo.com>
+// SPDX-FileCopyrightText: 2022-2023 Grigore Stefan <g_stefan@yahoo.com>
 // SPDX-License-Identifier: Unlicense
 
 Fabricare.include("vendor");
@@ -16,16 +16,16 @@ if (!Shell.fileExists("temp/extract.done.flag")) {
 
 	for (var file of fileList) {
 		var path = "output";
-		if (file.indexOf("perl")>=0) {
+		if (file.indexOf("perl") >= 0) {
 			continue;
 		};
-		if (file.indexOf("httpd")>=0) {
+		if (file.indexOf("httpd") >= 0) {
 			continue;
 		};
-		if (file.indexOf("llvm")>=0) {
+		if (file.indexOf("llvm") >= 0) {
 			continue;
 		};
-		if (file.indexOf(Platform.name+".7z")>=0) {
+		if (file.indexOf(Platform.name + ".7z") >= 0) {
 			path = "output/bin";
 		};
 		Shell.mkdirRecursivelyIfNotExists(path);
