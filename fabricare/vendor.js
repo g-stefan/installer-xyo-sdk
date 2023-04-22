@@ -5,6 +5,18 @@
 
 messageAction("vendor");
 
+projectList = JSON.decode(Shell.fileGetContents("source/projects.json"));
+function useProject(projectName) {
+	for (var projectCategory of projectList) {
+		for (var project of projectCategory) {
+			if (project == projectName) {
+				return true;
+			};
+		};
+	};
+	return false;
+};
+
 Shell.mkdirRecursivelyIfNotExists("vendor");
 
 var projectSuper = "xyo-sdk";
@@ -36,6 +48,10 @@ if (Script.isNil(json)) {
 var fileList = [];
 
 for (var project in json) {
+	if (!useProject(project)) {
+		continue;
+	};
+
 	var release = "";
 	for (var releaseInfo of json[project].release) {
 		if (releaseInfo.indexOf(Platform.name + "-dev.7z") >= 0) {

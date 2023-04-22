@@ -16,15 +16,6 @@ if (!Shell.fileExists("temp/extract.done.flag")) {
 
 	for (var file of fileList) {
 		var path = "output";
-		if (file.indexOf("perl") >= 0) {
-			continue;
-		};
-		if (file.indexOf("httpd") >= 0) {
-			continue;
-		};
-		if (file.indexOf("llvm") >= 0) {
-			continue;
-		};
 		if (file.indexOf(Platform.name + ".7z") >= 0) {
 			path = "output/bin";
 		};
