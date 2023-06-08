@@ -7,10 +7,9 @@
 				"name" : "installer-xyo-sdk",
 				"type" : "xyo-cpp",
 				"SPDX-License-Identifier": "MIT",
-				"version" : "6.4.0",
+				"version" : "6.5.0",
 				"noVersion" : true
 			}
-		],
-		"hasGithub" : true
+		]
 	}
 }
