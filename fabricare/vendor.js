@@ -1,6 +1,6 @@
 // Created by Grigore Stefan <g_stefan@yahoo.com>
 // Public domain (Unlicense) <http://unlicense.org>
-// SPDX-FileCopyrightText: 2022-2023 Grigore Stefan <g_stefan@yahoo.com>
+// SPDX-FileCopyrightText: 2022-2024 Grigore Stefan <g_stefan@yahoo.com>
 // SPDX-License-Identifier: Unlicense
 
 messageAction("vendor");
@@ -19,14 +19,24 @@ function useProject(projectName) {
 
 Shell.mkdirRecursivelyIfNotExists("vendor");
 
+var vendorSourceGit = "https://github.com/g-stefan";
+if (Shell.hasEnv("VENDOR_SOURCE_GIT")) {
+	vendorSourceGit = Shell.getenv("VENDOR_SOURCE_GIT");
+};
+
+var vendorSourceAuth = "";
+if (Shell.hasEnv("VENDOR_SOURCE_AUTH")) {
+	vendorSourceAuth = Shell.getenv("VENDOR_SOURCE_AUTH");
+};
+
 var projectSuper = "xyo-sdk";
 var projectSource = projectSuper + "-" + Project.version + ".json";
 
 if (!Shell.fileExists("vendor/" + projectSource)) {
-	var cmd = "curl --insecure --location https://github.com/g-stefan/" + projectSuper + "/releases/download/v" + Project.version + "/" + projectSource + " --output vendor/" + projectSource;
+	var cmd = "curl --insecure --location " + vendorSourceGit + "/" + projectSuper + "/releases/download/v" + Project.version + "/" + projectSource + " "+vendorSourceAuth+" --output vendor/" + projectSource;
 	Console.writeLn(cmd);
 	exitIf(Shell.system(cmd));
-	if (!(Shell.getFileSize("vendor/" + projectSource) > 16)) {
+	if (!(Shell.getFileSize("vendor/" + projectSource) > 1024)) {
 		messageError("download source");
 		Script.exit(1);
 	};
@@ -71,10 +81,10 @@ for (var project in json) {
 	};
 	fileList[fileList.length] = release;
 	if (!Shell.fileExists("vendor/" + release)) {
-		var cmd = "curl --insecure --location https://github.com/g-stefan/" + project + "/releases/download/v" + json[project].version + "/" + release + " --output vendor/" + release;
+		var cmd = "curl --insecure --location " + vendorSourceGit + "/" + project + "/releases/download/v" + json[project].version + "/" + release + " "+vendorSourceAuth+" --output vendor/" + release;
 		Console.writeLn(cmd);
 		exitIf(Shell.system(cmd));
-		if (!(Shell.getFileSize("vendor/" + release) > 16)) {
+		if (!(Shell.getFileSize("vendor/" + release) > 1024)) {
 			Shell.remove("vendor/" + release);
 			messageError("download release");
 			Script.exit(1);
