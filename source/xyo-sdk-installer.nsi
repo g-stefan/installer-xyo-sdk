@@ -182,14 +182,6 @@ Section "XYO SDK (required)" MainSection
 		Pop $0
 	${EndIf}
 
-	; Set XYO_PATH_REPOSITORY_LIBRARY
-	EnVar::Check "XYO_PATH_REPOSITORY_LIBRARY" "$INSTDIR${SoftwareSubDir}"
-	Pop $0
-	${If} $0 <> 0
-		EnVar::AddValue "XYO_PATH_REPOSITORY_LIBRARY" "$INSTDIR${SoftwareSubDir}"
-		Pop $0
-	${EndIf}
-
 	; Set XYO_PLATFORM
 	EnVar::Delete "XYO_PLATFORM"
 	Pop $0
@@ -200,58 +192,36 @@ Section "XYO SDK (required)" MainSection
 	EnVar::SetHKCU
 	
 	ReadEnvStr $PathUserProfile USERPROFILE
-	CreateDirectory "$PathUserProfile\SDK"
+	CreateDirectory "$PathUserProfile\.xyo-sdk\win64-msvc-2022"
 
 	; Set PATH
-	EnVar::Check "PATH" "$PathUserProfile\SDK\bin"
+	EnVar::Check "PATH" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\bin"
 	Pop $0
 	${If} $0 <> 0
-		EnVar::AddValue "PATH" "$PathUserProfile\SDK\bin"
+		EnVar::AddValue "PATH" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\bin"
 		Pop $0
 	${EndIf}
 
 	; Set INCLUDE
-	EnVar::Check "INCLUDE" "$PathUserProfile\SDK\include"
+	EnVar::Check "INCLUDE" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\include"
 	Pop $0
 	${If} $0 <> 0
-		EnVar::AddValue "INCLUDE" "$PathUserProfile\SDK\include"
-		Pop $0
-	${EndIf}
-
-	; Set INCLUDE System
-	EnVar::Check "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
-	Pop $0
-	${If} $0 <> 0
-		EnVar::AddValue "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
+		EnVar::AddValue "INCLUDE" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\include"
 		Pop $0
 	${EndIf}
 
 	; Set LIB
-	EnVar::Check "LIB" "$PathUserProfile\SDK\lib"
+	EnVar::Check "LIB" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\lib"
 	Pop $0
 	${If} $0 <> 0
-		EnVar::AddValue "LIB" "$PathUserProfile\SDK\lib"
+		EnVar::AddValue "LIB" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\lib"
 		Pop $0
 	${EndIf}
 
-	; Set LIB System
-	EnVar::Check "LIB" "$INSTDIR${SoftwareSubDir}\lib"
+	; Set XYO_PLATFORM_PATH
+	EnVar::Delete "XYO_PLATFORM_PATH"
 	Pop $0
-	${If} $0 <> 0
-		EnVar::AddValue "LIB" "$INSTDIR${SoftwareSubDir}\lib"
-		Pop $0
-	${EndIf}
-
-	; Set XYO_PATH_REPOSITORY
-	EnVar::Delete "XYO_PATH_REPOSITORY"
-	Pop $0
-	EnVar::AddValue "XYO_PATH_REPOSITORY" "$PathUserProfile\SDK"
-	Pop $0
-
-	; Set XYO_PATH_RELEASE
-	EnVar::Delete "XYO_PATH_RELEASE"
-	Pop $0
-	EnVar::AddValue "XYO_PATH_RELEASE" "$PathUserProfile\SDK\release"
+	EnVar::AddValue "XYO_PLATFORM_PATH" "$PathUserProfile\.xyo-sdk\win64-msvc-2022"
 	Pop $0
 
 SectionEnd
@@ -376,20 +346,6 @@ Section "Uninstall"
 		${EndIf}
 	${EndIf}
 
-	; Remove XYO_PATH_REPOSITORY_LIBRARY
-	EnVar::Check "XYO_PATH_REPOSITORY_LIBRARY" "$INSTDIR${SoftwareSubDir}"
-	Pop $0
-	${If} $0 = 0
-		EnVar::DeleteValue "XYO_PATH_REPOSITORY_LIBRARY" "$INSTDIR${SoftwareSubDir}"
-		Pop $0
-		EnVar::Update HKLM XYO_PATH_REPOSITORY_LIBRARY
-		ReadEnvStr $0 XYO_PATH_REPOSITORY_LIBRARY
-		${If} $0 == ""
-			EnVar::Delete "XYO_PATH_REPOSITORY_LIBRARY"
-			Pop $0		
-		${EndIf}
-	${EndIf}
-
 	; Remove XYO_PLATFORM
 	EnVar::Delete "XYO_PLATFORM"
 	Pop $0
@@ -398,63 +354,34 @@ Section "Uninstall"
 	EnVar::SetHKCU
 
 	ReadEnvStr $PathUserProfile USERPROFILE
-	CreateDirectory "$PathUserProfile\SDK"
 
 	; Remove PATH
-	EnVar::Check "PATH" "$PathUserProfile\SDK\bin"
+	EnVar::Check "PATH" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\bin"
 	Pop $0
 	${If} $0 = 0
-		EnVar::DeleteValue "PATH" "$PathUserProfile\SDK\bin"
+		EnVar::DeleteValue "PATH" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\bin"
 		Pop $0
-	${EndIf}
-
-	; Remove INCLUDE System
-	EnVar::Check "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
-	Pop $0
-	${If} $0 = 0
-		EnVar::DeleteValue "INCLUDE" "$INSTDIR${SoftwareSubDir}\include"
-		Pop $0
-		EnVar::Update HKCU INCLUDE
-		ReadEnvStr $0 INCLUDE
-		${If} $0 == ""
-			EnVar::Delete "INCLUDE"
-			Pop $0		
-		${EndIf}
 	${EndIf}
 
 	; Remove INCLUDE
-	EnVar::Check "INCLUDE" "$PathUserProfile\SDK\include"
+	EnVar::Check "INCLUDE" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\include"
 	Pop $0
 	${If} $0 = 0
-		EnVar::DeleteValue "INCLUDE" "$PathUserProfile\SDK\include"
+		EnVar::DeleteValue "INCLUDE" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\include"
 		Pop $0
 		EnVar::Update HKCU INCLUDE
 		ReadEnvStr $0 INCLUDE
 		${If} $0 == ""
 			EnVar::Delete "INCLUDE"
-			Pop $0		
-		${EndIf}
-	${EndIf}
-
-	; Remove LIB System
-	EnVar::Check "LIB" "$INSTDIR${SoftwareSubDir}\lib"
-	Pop $0
-	${If} $0 = 0
-		EnVar::DeleteValue "LIB" "$INSTDIR${SoftwareSubDir}\lib"
-		Pop $0
-		EnVar::Update HKCU LIB
-		ReadEnvStr $0 LIB
-		${If} $0 == ""
-			EnVar::Delete "LIB"
 			Pop $0		
 		${EndIf}
 	${EndIf}
 
 	; Remove LIB
-	EnVar::Check "LIB" "$PathUserProfile\SDK\lib"
+	EnVar::Check "LIB" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\lib"
 	Pop $0
 	${If} $0 = 0
-		EnVar::DeleteValue "LIB" "$PathUserProfile\SDK\lib"
+		EnVar::DeleteValue "LIB" "$PathUserProfile\.xyo-sdk\win64-msvc-2022\lib"
 		Pop $0
 		EnVar::Update HKCU LIB
 		ReadEnvStr $0 LIB
@@ -464,12 +391,8 @@ Section "Uninstall"
 		${EndIf}
 	${EndIf}
 
-	; Remove XYO_PATH_REPOSITORY
-	EnVar::Delete "XYO_PATH_REPOSITORY"
-	Pop $0
-
-	; Remove XYO_PATH_RELEASE
-	EnVar::Delete "XYO_PATH_RELEASE"
+	; Remove XYO_PLATFORM_PATH
+	EnVar::Delete "XYO_PLATFORM_PATH"
 	Pop $0
 
 SectionEnd
