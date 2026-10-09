@@ -30,10 +30,10 @@ if (Shell.hasEnv("VENDOR_SOURCE_AUTH")) {
 };
 
 var projectSuper = "xyo-sdk";
-var projectSource = projectSuper + "-" + Project.version + ".json";
+var projectSource = "xyo." + projectSuper + ".v" + Project.version + ".win64-msvc-2026.json";
 
 if (!Shell.fileExists("vendor/" + projectSource)) {
-	var cmd = "curl --insecure --location " + vendorSourceGit + "/" + projectSuper + "/releases/download/v" + Project.version + "/" + projectSource + " "+vendorSourceAuth+" --output vendor/" + projectSource;
+	var cmd = "curl --insecure --location " + vendorSourceGit + "/" + projectSuper + "/releases/download/v" + Project.version + "/" + projectSource + " " + vendorSourceAuth + " --output vendor/" + projectSource;
 	Console.writeLn(cmd);
 	exitIf(Shell.system(cmd));
 	if (!(Shell.getFileSize("vendor/" + projectSource) > 1024)) {
@@ -64,13 +64,13 @@ for (var project in json) {
 
 	var release = "";
 	for (var releaseInfo of json[project].release) {
-		if (releaseInfo.indexOf(Platform.name + "-dev.7z") >= 0) {
+		if (releaseInfo.indexOf(Platform.name + ".dev.zip") >= 0) {
 			release = releaseInfo;
 		};
 	};
 	if (release.length == 0) {
 		for (var releaseInfo of json[project].release) {
-			if (releaseInfo.indexOf(Platform.name + ".7z") >= 0) {
+			if (releaseInfo.indexOf(Platform.name + ".bin.zip") >= 0) {
 				release = releaseInfo;
 			};
 		};
@@ -81,7 +81,7 @@ for (var project in json) {
 	};
 	fileList[fileList.length] = release;
 	if (!Shell.fileExists("vendor/" + release)) {
-		var cmd = "curl --insecure --location " + vendorSourceGit + "/" + project + "/releases/download/v" + json[project].version + "/" + release + " "+vendorSourceAuth+" --output vendor/" + release;
+		var cmd = "curl --insecure --location " + vendorSourceGit + "/" + project + "/releases/download/v" + json[project].version + "/" + release + " " + vendorSourceAuth + " --output vendor/" + release;
 		Console.writeLn(cmd);
 		exitIf(Shell.system(cmd));
 		if (!(Shell.getFileSize("vendor/" + release) > 1024)) {

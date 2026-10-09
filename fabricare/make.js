@@ -16,7 +16,7 @@ if (!Shell.fileExists("temp/extract.done.flag")) {
 
 	for (var file of fileList) {
 		var path = "output";
-		if (file.indexOf(Platform.name + ".7z") >= 0) {
+		if (file.indexOf(Platform.name + ".bin.zip") >= 0) {
 			path = "output/bin";
 		};
 		Shell.mkdirRecursivelyIfNotExists(path);
